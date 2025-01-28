@@ -77,10 +77,10 @@ List<T>::~List()
 {
     while(head != NULL)
     {
-        Node<T>* n=head->next;
+        Node<T>* it=head->next;
         
         delete head;
-        head=n;
+        head=it;
     }
 }
 
