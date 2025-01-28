@@ -6,7 +6,8 @@
 //
 
 #include "list.h"
-#include <cstdlib>
+
+void initializer(List<int> &l);
 
 int main()
 {
@@ -15,18 +16,21 @@ int main()
     cout<<"input\n-----\n\t";
     List<int> l;
     srand(int(time(0)));
-    
-    for(int i=1; i <= 10; i++)
-        l.push(rand()%10+1);
-    
+    initializer(l);
     l.show();
     
     l.Remove_Dups();
     
-    cout<<"\noutput\n------\n\t";
+    cout<<"\n\noutput\n------\n\t";
     l.show();
     
-    cout<<"\nsolution\n--------\n\tAuxiliary space complexity: O(1); time complexity: O(n^2).\n\n";
+    cout<<"\n\nsolution\n--------\n\tAuxiliary space complexity: O(1); time complexity: O(n^2).\n\n";
     
     return 0;
+}
+
+void initializer(List<int> &l)
+{
+    for(int i=1; i <= 10; i++)
+        l.pull(rand()%10+1);
 }

@@ -31,40 +31,51 @@ class List
     Node<T>* head;
     
     void remove(Node<T>* p){Node<T>* d=p->next; p->next=d->next; delete d;}
-    void pop();
     
 public:
     List(){head=NULL;}
-    void push(const T &e){Node<T>* n=new Node<T>(e); n->next=head; head=n;}
-    
-    void Remove_Dups()
-    {
-        for(Node<T>* n1=head; n1 != NULL; n1=n1->next) // for node n1 at head...tail in singly linked list
-            for(Node<T>* n2=n1; n2 != NULL; n2=n2->next) // for node n2 at n1...tail in singly linked list
-                while(n2->next != NULL && n1->data == n2->next->data) // while n2 isn't tail and n1's data equates to n2's next's data
-                    remove(n2); // remove n2 from singly linked list
-    }
     
     void show() const
     {
-        for(Node<T>* n=head; n != NULL; n=n->next)
-            cout<<n->data<<(n->next != NULL ? "->" : "");
-        
-        if(head != NULL)
-            cout<<endl;
+        for(Node<T>* it=head; it != NULL; it=it->next)
+            cout<<it->data<<(it->next != NULL ? "->" : "");
     }
     
-    ~List()
+    void Remove_Dups()
     {
-        while(head != NULL)
-            pop();
+        if(head == NULL || head->next == NULL) // if singly-linked-list is empty or just includes head
+            return;
+        
+        for(Node<T>* it1=head; it1->next != NULL; it1=it1->next) // for it1 @ head...(second-to-last)node in singly-linked-list
+            for(Node<T>* it2=it1; it2 != NULL; it2=it2->next) // for it2 @ it1...tail in singly-linked-list
+                while(it2->next != NULL && it1->data == it2->next->data) // while it2 isn't tail and it1 is equal to it2's next
+                    remove(it2); // unlink and delete it2's next from singly-linked-list
     }
+    
+    void pull(const T &e);
+    ~List();
 };
 
 template<class T>
-void List<T>::pop()
+void List<T>::pull(const T &e)
 {
-    if(head != NULL)
+    Node<T>* n=new Node<T>(e);
+    
+    if(head == NULL)
+        head=n;
+    else
+    {
+        Node<T>* it=head;
+        
+        for(; it->next != NULL; it=it->next);
+        it->next=n;
+    }
+}
+
+template<class T>
+List<T>::~List()
+{
+    while(head != NULL)
     {
         Node<T>* n=head->next;
         
